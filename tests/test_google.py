@@ -1,17 +1,10 @@
 import time
 
-from selenium import webdriver
-from selenium.common import WebDriverException
 from selenium.webdriver import Keys
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.support.wait import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 
-from seleyasha.conditions import type_to_element, click_on_element, number_of_elements
-
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-wait = WebDriverWait(driver, timeout=2, poll_frequency=0.25, ignored_exceptions=(WebDriverException, ))
-driver.get('https://www.ecosia.org/')
+from seleyasha import general
+from seleyasha.conditions import number_of_elements
+from seleyasha.commands import type, click
 
 '''
 # ___ in Selenium Webdriver
@@ -42,11 +35,21 @@ assert number_of_pulls == 11
 
 '''
 
-wait.until(type_to_element('[name=q]', value='selene yashaka pull requests' + Keys.ENTER))
+general.driver.get('https://www.ecosia.org/')
 
-wait.until(click_on_element('[data-test-id=mainline-result-web]:nth-of-type(1) a'))
+query='[name=q]'
+type(query, value='selene' + Keys.ENTER)
 
-wait.until(number_of_elements('[id^=issue_]:not([id$=_link])', value=4))
+general.driver.back()
+
+type(query, value=' yashaka pull requests' + Keys.ENTER)
+
+click('[data-test-id=mainline-result-web]:nth-of-type(1) a')
+
+number_of_elements('[id^=issue_]:not([id$=_link])', value=11)
 
 
 time.sleep(2)
+
+
+general.driver.quit()
