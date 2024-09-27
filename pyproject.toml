@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "qa-guru-dop-1-selenium-webdriver"
+version = "0.1.0"
+description = ""
+authors = ["Viktoriia Lavrova <viktoriia.lav2908@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+selenium = "4.25.0"
+webdriver-manager = "4.0.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
