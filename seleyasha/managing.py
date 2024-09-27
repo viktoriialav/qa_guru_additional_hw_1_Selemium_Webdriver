@@ -3,10 +3,9 @@ from typing import Union, Literal
 from selenium.common import WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.wait import WebDriverWait
-
 
 from seleyasha.selector import to_locator
+from seleyasha.wait import WebDriverWait
 
 
 class Browser:
@@ -15,7 +14,7 @@ class Browser:
         self.wait = WebDriverWait(
             driver, timeout=2,
             poll_frequency=0.25,
-            ignored_exceptions=(WebDriverException, )
+            ignored_exceptions=(WebDriverException,)
         )
 
     def open(self, url):
@@ -54,7 +53,3 @@ class Browser:
 
     def assert_(self, condition):
         return self.wait.until(condition)
-
-
-
-

@@ -1,17 +1,15 @@
-import time
-
-from selenium.webdriver import Keys
 from selenium import webdriver
+from selenium.webdriver import Keys
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-from seleyasha.managing import Browser
 from seleyasha.conditions import that
+from seleyasha.managing import Browser
 
 browser = Browser(webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())))
 browser.open('https://www.ecosia.org/')
 
-query='[name=q]'
+query = '[name=q]'
 browser.type(query, value='selene' + Keys.ENTER)
 browser.back()
 browser.type(query, value=' yashaka pull requests' + Keys.ENTER)
