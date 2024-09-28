@@ -1,10 +1,11 @@
+from __future__ import annotations
 from dataclasses import dataclass
-from typing import Union, Literal
 
 from selenium.common import WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
+from seleyasha.conditions import that
 from seleyasha.selector import to_locator
 from seleyasha.wait import WebDriverWait
 
@@ -13,6 +14,27 @@ from seleyasha.wait import WebDriverWait
 class Config:
     timeout: int = 2
     base_url: str = ''
+
+
+class Element:
+    def __init__(self, selector, browser: Browser):
+        self.selector = selector
+        self.browser = browser
+
+    def type(self, value):
+        self.browser.type(self.selector, value)
+
+    def click(self):
+        self.browser.click(self.selector)
+
+
+class Collection:
+    def __init__(self, selector, browser: Browser):
+        self.selector = selector
+        self.browser = browser
+
+    def assert_amount(self, value):
+        self.browser.assert_(that.number_of_elements(self.selector, value=value))
 
 
 class Browser:
@@ -35,15 +57,6 @@ class Browser:
     def back(self):
         self.driver.back()
 
-    def element(self, selector):
-        def command(driver: WebDriver) -> Union[Literal[False], WebElement]:
-            webelement = driver.find_element(*to_locator(selector))
-            if not webelement.is_displayed():
-                raise AssertionError(f'element is not displayed: {webelement.get_attribute("outerHTML")}')
-            return webelement
-
-        return self.wait.until(command, message=f'element by {selector} is not ready')
-
     def type(self, selector, value):
         def command(driver: WebDriver) -> WebElement:
             webelement = driver.find_element(*to_locator(selector))
@@ -62,3 +75,9 @@ class Browser:
 
     def assert_(self, condition):
         return self.wait.until(condition)
+
+    def element(self, selector) -> Element:
+        return Element(selector, self)
+
+    def all(self, selector):
+        return Collection(selector, self)
