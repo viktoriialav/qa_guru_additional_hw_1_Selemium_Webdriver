@@ -4,10 +4,11 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 from seleyasha.conditions import that
-from seleyasha.managing import Browser
+from seleyasha.managing import Browser, Config
 
-browser = Browser(webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())))
-browser.open('https://www.ecosia.org/')
+browser = Browser(driver=webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())),
+                  config=Config(timeout=2, base_url='https://www.ecosia.org'))
+browser.open('/')
 
 query = '[name=q]'
 browser.type(query, value='selene' + Keys.ENTER)
