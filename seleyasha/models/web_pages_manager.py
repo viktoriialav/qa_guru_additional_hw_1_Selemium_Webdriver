@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-from seleyasha.managing import Browser, Config
+from seleyasha.browser import Browser, Config
 from seleyasha.models.pages.ecosia import Ecosia
 from seleyasha.models.pages.github import GithubPullRequests
 

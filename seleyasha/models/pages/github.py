@@ -1,4 +1,4 @@
-from seleyasha.managing import Browser
+from seleyasha.browser import Browser
 
 
 class GithubPullRequests:
